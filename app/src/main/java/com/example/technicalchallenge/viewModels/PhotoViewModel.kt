@@ -2,11 +2,13 @@ package com.example.technicalchallenge.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.technicalchallenge.data.Photo
+import androidx.paging.cachedIn
 import com.example.technicalchallenge.data.PhotoRepository
 import kotlinx.coroutines.launch
 
 class PhotoViewModel(private val repository: PhotoRepository): ViewModel() {
+
+    val pagedData = repository.getPagedPhotos().flow.cachedIn(viewModelScope)
 
     fun fetchAndSavePhotos() {
         viewModelScope.launch {
@@ -14,10 +16,4 @@ class PhotoViewModel(private val repository: PhotoRepository): ViewModel() {
         }
     }
 
-    fun getPhotosFromDb(onResult: (List<Photo>) -> Unit) {
-        viewModelScope.launch {
-            val photos = repository.getPhotosFromDb()
-            onResult(photos)
-        }
-    }
 }

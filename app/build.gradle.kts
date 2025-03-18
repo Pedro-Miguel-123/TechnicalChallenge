@@ -55,10 +55,15 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
     implementation(libs.gson)
+    implementation(libs.coil)
+
+    // Paging
+    implementation(libs.paging.compose)
 
     // Room Database
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
+    implementation(libs.room.paging)
     kapt(libs.room.compiler)
 
     // Testing

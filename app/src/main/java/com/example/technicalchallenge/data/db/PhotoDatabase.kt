@@ -11,19 +11,10 @@ abstract class PhotoDatabase : RoomDatabase() {
     abstract fun photoDao(): PhotoDao
 
     companion object {
-        @Volatile
-        private var INSTANCE: PhotoDatabase? = null
-
-        fun getDatabase(context: Context): PhotoDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    PhotoDatabase::class.java,
-                    "photo_database"
-                ).build()
-                INSTANCE = instance
-                instance
-            }
-        }
+        private const val databaseName = "photo_database"
+        fun build(context: Context) =
+            Room.databaseBuilder(context, PhotoDatabase::class.java, databaseName)
+                .fallbackToDestructiveMigration()
+                .build()
     }
 }
