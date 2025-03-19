@@ -33,7 +33,7 @@ fun CustomDialog(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(275.dp)
+                .height(315.dp)
                 .padding(16.dp),
             shape = RoundedCornerShape(16.dp),
         ) {

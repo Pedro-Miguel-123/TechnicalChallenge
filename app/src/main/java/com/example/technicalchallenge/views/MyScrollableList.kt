@@ -1,6 +1,5 @@
 package com.example.technicalchallenge.views
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -30,7 +29,7 @@ import com.example.technicalchallenge.data.Photo
 @Composable
 fun MyScrollableList(modifier: Modifier = Modifier, photos: LazyPagingItems<Photo>
 ) {
-    Log.d("VIEW", "REFRESHED WHEN -> ${photos.itemCount}")
+
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp)

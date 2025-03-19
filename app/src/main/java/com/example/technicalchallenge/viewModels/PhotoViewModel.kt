@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 
 class PhotoViewModel(private val repository: PhotoRepository): ViewModel() {
 
-    val pagedData = repository.getPagedPhotos().flow.cachedIn(viewModelScope)
+    val pagedData = repository.getPagedPhotos().cachedIn(viewModelScope)
 
     fun fetchAndSavePhotos() {
         viewModelScope.launch {

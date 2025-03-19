@@ -14,11 +14,22 @@ room = "2.6.1"
 coil = "2.5.0"
 paging = "3.2.0"
 roomPaging = "2.5.2"
+mockito = "4.1.0"
+kotlinxCoroutinesTest = "1.7.3"
+mockitoInline = "4.6.1"
+archCoreTesting = "2.2.0"
+pagingTesting = "3.2.0"
+timber = "5.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+mockito-inline = { group = "org.mockito", name = "mockito-inline", version.ref = "mockitoInline" }
+androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "archCoreTesting" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito"}
+paging-testing = { group = "androidx.paging", name = "paging-testing", version.ref = "pagingTesting"}
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -35,7 +46,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
-coil = {group = "io.coil-kt", name="coil-compose", version.ref="coil"}
+coil = {group = "io.coil-kt", name="coil-compose", version.ref = "coil"}
 
 # Paging
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging"}
@@ -44,7 +55,10 @@ paging-compose = { group = "androidx.paging", name = "paging-compose", version.r
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
-room-paging = { group = "androidx.room", name = "room-paging", version.ref= "roomPaging"}
+room-paging = { group = "androidx.room", name = "room-paging", version.ref = "roomPaging"}
+
+# Timber
+jakewharton-timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
