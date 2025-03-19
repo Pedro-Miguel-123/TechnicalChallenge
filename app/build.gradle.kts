@@ -69,6 +69,8 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     implementation(libs.room.paging)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.paging.runtime.ktx)
     kapt(libs.room.compiler)
 
     // Testing
