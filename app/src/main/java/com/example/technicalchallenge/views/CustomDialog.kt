@@ -29,7 +29,6 @@ fun CustomDialog(
     onDismissRequest: () -> Unit
 ) {
     Dialog(onDismissRequest = { onDismissRequest() }) {
-        // Draw a rectangle shape with rounded corners inside the dialog
         Card(
             modifier = Modifier
                 .fillMaxWidth()
