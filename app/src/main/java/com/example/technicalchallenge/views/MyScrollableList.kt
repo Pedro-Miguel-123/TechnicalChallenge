@@ -24,7 +24,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.technicalchallenge.data.Photo
+import com.example.technicalchallenge.data.db.Photo
 
 @Composable
 fun MyScrollableList(modifier: Modifier = Modifier, photos: LazyPagingItems<Photo>

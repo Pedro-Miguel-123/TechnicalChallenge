@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.technicalchallenge.data.Photo
+import com.example.technicalchallenge.data.db.Photo
 
 @Composable
 fun CustomDialog(

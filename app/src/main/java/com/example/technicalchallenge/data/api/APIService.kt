@@ -1,6 +1,6 @@
 package com.example.technicalchallenge.data.api
 
-import com.example.technicalchallenge.data.Photo
+import com.example.technicalchallenge.data.db.Photo
 import retrofit2.http.GET
 
 interface APIService {

@@ -1,4 +1,4 @@
-package com.example.technicalchallenge.data
+package com.example.technicalchallenge.data.db
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 

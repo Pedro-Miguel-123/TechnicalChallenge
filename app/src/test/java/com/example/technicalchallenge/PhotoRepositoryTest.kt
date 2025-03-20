@@ -2,7 +2,7 @@ package com.example.technicalchallenge
 
 import androidx.paging.testing.asPagingSourceFactory
 import androidx.paging.testing.asSnapshot
-import com.example.technicalchallenge.data.Photo
+import com.example.technicalchallenge.data.db.Photo
 import com.example.technicalchallenge.data.PhotoRepositoryImpl
 import com.example.technicalchallenge.data.api.APIService
 import com.example.technicalchallenge.data.db.PhotoDao
@@ -61,13 +61,15 @@ class PhotoRepositoryTest {
 
         verify(networkMonitor).register()
 
-        val mockPhotos = listOf(Photo(
+        val mockPhotos = listOf(
+            Photo(
             albumId = 1,
             id = 1,
             title = "accusamus beatae ad facilis cum similique qui sunt",
             url = "https://placehold.co/600x600/92c952/white/png",
             thumbnailUrl = "https://placehold.co/150x150/92c952/white/png"
-        ))
+        )
+        )
 
 
         whenever(apiService.fetchPhotos()).thenAnswer { mockPhotos }
@@ -81,13 +83,15 @@ class PhotoRepositoryTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `getPagedData should return data properly formatted`() = runTest {
-        val mockPhoto = listOf(Photo(
+        val mockPhoto = listOf(
+            Photo(
             albumId = 1,
             id = 1,
             title = "Test Photo",
             url = "https://placehold.co/600x600.png",
             thumbnailUrl = "https://placehold.co/150x150.png"
-        ))
+        )
+        )
 
         val pagingSourceFactory = mockPhoto.asPagingSourceFactory()
         val pagingSource = pagingSourceFactory()

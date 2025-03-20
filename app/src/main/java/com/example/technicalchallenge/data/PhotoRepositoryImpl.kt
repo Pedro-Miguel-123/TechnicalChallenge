@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.technicalchallenge.data.api.APIService
+import com.example.technicalchallenge.data.db.Photo
 import com.example.technicalchallenge.data.db.PhotoDao
 import com.example.technicalchallenge.data.net.NetworkMonitor
 import kotlinx.coroutines.CoroutineScope
