@@ -4,9 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.technicalchallenge.data.PhotoRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PhotoViewModel(private val repository: PhotoRepository): ViewModel() {
+@HiltViewModel
+class PhotoViewModel @Inject constructor(
+    private val repository: PhotoRepository
+): ViewModel() {
 
     val pagedData = repository.getPagedPhotos().cachedIn(viewModelScope)
 
@@ -15,5 +20,4 @@ class PhotoViewModel(private val repository: PhotoRepository): ViewModel() {
             repository.fetchAndStorePhotos()
         }
     }
-
 }

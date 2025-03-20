@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.dagger.hilt)
 }
 
 
@@ -56,6 +57,12 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+    // Hilt
+    implementation(libs.squareup.javapoet)
+    implementation(libs.dagger.hilt)
+    implementation(libs.androidx.hilt.navigation.compose)
+    kapt(libs.dagger.hilt.compiler)
+
     // Networking - Retrofit & Gson
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
@@ -92,3 +99,4 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
+
