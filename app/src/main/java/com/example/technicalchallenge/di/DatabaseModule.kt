@@ -2,8 +2,8 @@ package com.example.technicalchallenge.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.technicalchallenge.data.db.PhotoDao
-import com.example.technicalchallenge.data.db.PhotoDatabase
+import com.example.technicalchallenge.data.local.PhotoDao
+import com.example.technicalchallenge.data.local.PhotoDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

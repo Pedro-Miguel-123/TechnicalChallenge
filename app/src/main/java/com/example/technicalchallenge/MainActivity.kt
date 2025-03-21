@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.technicalchallenge.ui.theme.TechnicalChallengeTheme
-import com.example.technicalchallenge.views.MainScreen
+import com.example.technicalchallenge.ui.albumScreen.AlbumsScreen
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TechnicalChallengeTheme {
-                MainScreen()
+                AlbumsScreen()
             }
         }
     }

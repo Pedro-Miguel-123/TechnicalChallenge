@@ -1,4 +1,4 @@
-package com.example.technicalchallenge.data.net
+package com.example.technicalchallenge.data.network
 
 import android.content.Context
 import android.net.ConnectivityManager

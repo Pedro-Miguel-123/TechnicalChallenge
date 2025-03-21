@@ -1,13 +1,12 @@
 package com.example.technicalchallenge.di
 
 import android.content.Context
-import com.example.technicalchallenge.data.PhotoRepository
-import com.example.technicalchallenge.data.PhotoRepositoryImpl
+import com.example.technicalchallenge.data.AlbumRepository
+import com.example.technicalchallenge.data.AlbumRepositoryImpl
 import com.example.technicalchallenge.data.api.APIService
-import com.example.technicalchallenge.data.db.PhotoDao
-import com.example.technicalchallenge.data.db.PhotoDatabase
-import com.example.technicalchallenge.data.net.NetworkMonitor
-import com.example.technicalchallenge.data.net.NetworkMonitorImpl
+import com.example.technicalchallenge.data.local.PhotoDao
+import com.example.technicalchallenge.data.network.NetworkMonitor
+import com.example.technicalchallenge.data.network.NetworkMonitorImpl
 import com.example.technicalchallenge.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -49,7 +48,7 @@ object AppModule {
         networkMonitor: NetworkMonitor,
         apiService: APIService,
         coroutineScope: CoroutineScope
-    ): PhotoRepository {
-        return PhotoRepositoryImpl(photoDao, networkMonitor, apiService, coroutineScope)
+    ): AlbumRepository {
+        return AlbumRepositoryImpl(photoDao, networkMonitor, apiService, coroutineScope)
     }
 }

@@ -2,11 +2,11 @@ package com.example.technicalchallenge
 
 import androidx.paging.testing.asPagingSourceFactory
 import androidx.paging.testing.asSnapshot
-import com.example.technicalchallenge.data.db.Photo
-import com.example.technicalchallenge.data.PhotoRepositoryImpl
+import com.example.technicalchallenge.data.local.Photo
+import com.example.technicalchallenge.data.AlbumRepositoryImpl
 import com.example.technicalchallenge.data.api.APIService
-import com.example.technicalchallenge.data.db.PhotoDao
-import com.example.technicalchallenge.data.net.NetworkMonitor
+import com.example.technicalchallenge.data.local.PhotoDao
+import com.example.technicalchallenge.data.network.NetworkMonitor
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,11 +25,11 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
-class PhotoRepositoryTest {
+class AlbumRepositoryTest {
     private lateinit var photoDao: PhotoDao
     private lateinit var networkMonitor: NetworkMonitor
     private lateinit var apiService: APIService
-    private lateinit var repository: PhotoRepositoryImpl
+    private lateinit var repository: AlbumRepositoryImpl
 
     private val testDispatcher = StandardTestDispatcher()
     private val testScope = TestScope(testDispatcher)
@@ -42,7 +42,7 @@ class PhotoRepositoryTest {
         networkMonitor = mock()
         apiService = mock()
 
-        repository = PhotoRepositoryImpl(
+        repository = AlbumRepositoryImpl(
             photoDao = photoDao,
             networkMonitor = networkMonitor,
             apiService = apiService,
@@ -75,7 +75,7 @@ class PhotoRepositoryTest {
         whenever(apiService.fetchPhotos()).thenAnswer { mockPhotos }
 
 
-        repository.fetchAndStorePhotos()
+        repository.fetchAndStoreAlbums()
 
         verify(photoDao, times(1)).insertPhotos(mockPhotos)
     }

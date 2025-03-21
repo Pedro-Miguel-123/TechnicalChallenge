@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.squareup.javapoet)
     implementation(libs.dagger.hilt)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose.android)
     kapt(libs.dagger.hilt.compiler)
 
     // Networking - Retrofit & Gson
@@ -98,5 +99,6 @@ dependencies {
     // Debugging
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
 }
 

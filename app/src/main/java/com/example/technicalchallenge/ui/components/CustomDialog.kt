@@ -1,4 +1,4 @@
-package com.example.technicalchallenge.views
+package com.example.technicalchallenge.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,11 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.technicalchallenge.data.db.Photo
+import com.example.technicalchallenge.R
+import com.example.technicalchallenge.data.local.Photo
+import com.example.technicalchallenge.ui.theme.dimensions
 
 @Composable
 fun CustomDialog(
@@ -32,9 +34,9 @@ fun CustomDialog(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(315.dp)
-                .padding(16.dp),
-            shape = RoundedCornerShape(16.dp),
+                .height(dimensions.dialogHeight)
+                .padding(dimensions.space2x),
+            shape = RoundedCornerShape(dimensions.space2x),
         ) {
             Column(
                 modifier = Modifier
@@ -47,14 +49,15 @@ fun CustomDialog(
                         .data(photo.url)
                         .crossfade(true)
                         .build(),
-                    contentDescription = "Image from URL",
+                    contentDescription = stringResource(R.string.image_description, photo.url),
                     modifier = Modifier
-                        .size(100.dp),
+                        .size(dimensions.dialogImageSize)
+                        .padding(dimensions.space05x),
                     contentScale = ContentScale.Crop
                 )
                 Text(
                     text = photo.title,
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(dimensions.space1x),
                 )
                 Row(
                     modifier = Modifier
@@ -62,10 +65,9 @@ fun CustomDialog(
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     TextButton(
-                        onClick = { onDismissRequest() },
-                        modifier = Modifier.padding(8.dp),
+                        onClick = { onDismissRequest() }
                     ) {
-                        Text("Dismiss")
+                        Text(text = stringResource( R.string.dismiss_button))
                     }
                 }
             }

@@ -1,4 +1,4 @@
-package com.example.technicalchallenge.views
+package com.example.technicalchallenge.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -12,60 +12,56 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.currentCompositionLocalContext
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.technicalchallenge.data.db.Photo
+import com.example.technicalchallenge.R
+import com.example.technicalchallenge.data.local.Photo
+import com.example.technicalchallenge.ui.theme.dimensions
 
 @Composable
-fun MyScrollableList(modifier: Modifier = Modifier, photos: LazyPagingItems<Photo>
+fun PhotoList(
+    modifier: Modifier = Modifier,
+    photos: LazyPagingItems<Photo>
 ) {
-
     LazyColumn(
         modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp)
+        contentPadding = PaddingValues(dimensions.space2x)
     ) {
         items(photos.itemCount) { index ->
             val photo = photos[index]
             if (photo != null) {
-                ListPhotoComponent(photo = photo)
+                PhotoItem(photo = photo)
             }
-        }
-
-        when (photos.loadState.append) {
-            is LoadState.Loading -> {
-                item { CircularProgressIndicator() }
-            }
-            is LoadState.Error -> {
-                item { Text("Error loading more data") }
-            }
-            else -> {}
         }
     }
+
 }
 
 
 @Composable
-fun ListPhotoComponent(photo: Photo) {
+fun PhotoItem(photo: Photo) {
     var showDialog by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 8.dp)
+            .padding(bottom = dimensions.space1x)
             .clickable {
                 showDialog = true
             }
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(dimensions.space2x)) {
             Text(text = photo.title)
             AsyncImage(
                 model = ImageRequest.Builder
@@ -73,10 +69,10 @@ fun ListPhotoComponent(photo: Photo) {
                     .data(photo.thumbnailUrl)
                     .crossfade(true)
                     .build(),
-                contentDescription = "Thumbnail from ${photo.title}",
+                contentDescription = stringResource(R.string.image_description, photo.thumbnailUrl),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .size(150.dp),
+                    .size(dimensions.imageSize),
                 contentScale = ContentScale.Crop
             )
         }
@@ -87,7 +83,6 @@ fun ListPhotoComponent(photo: Photo) {
             ) {
                 showDialog = false
             }
-
         }
     }
 }
