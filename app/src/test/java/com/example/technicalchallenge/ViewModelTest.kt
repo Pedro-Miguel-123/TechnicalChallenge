@@ -2,8 +2,8 @@ package com.example.technicalchallenge
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingData
-import com.example.technicalchallenge.data.PhotoRepository
-import com.example.technicalchallenge.viewModels.PhotoViewModel
+import com.example.technicalchallenge.data.AlbumRepository
+import com.example.technicalchallenge.ui.albumScreen.AlbumsViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -22,13 +22,13 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 
-class PhotoViewModelTest {
+class AlbumsViewModelTest {
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var photoViewModel: PhotoViewModel
-    private val repository: PhotoRepository = mock()
+    private lateinit var albumsViewModel: AlbumsViewModel
+    private val repository: AlbumRepository = mock()
     private val testDispatcher = StandardTestDispatcher()
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -37,7 +37,7 @@ class PhotoViewModelTest {
         Dispatchers.setMain(testDispatcher)
         whenever(repository.getPagedPhotos()).thenReturn(flowOf(PagingData.empty()))
 
-        photoViewModel = PhotoViewModel(repository)
+        albumsViewModel = AlbumsViewModel(repository)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -49,8 +49,8 @@ class PhotoViewModelTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `fetchAndSavePhotos should call repository fetchAndStorePhotos`() = runTest {
-        photoViewModel.fetchAndSavePhotos()
+        albumsViewModel.fetchAndSaveAlbums()
         advanceUntilIdle()
-        verify(repository, times(1)).fetchAndStorePhotos()
+        verify(repository, times(1)).fetchAndStoreAlbums()
     }
 }

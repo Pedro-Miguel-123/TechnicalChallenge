@@ -1,10 +1,10 @@
 package com.example.technicalchallenge.data
 
 import androidx.paging.PagingData
-import com.example.technicalchallenge.data.db.Photo
+import com.example.technicalchallenge.data.local.Photo
 import kotlinx.coroutines.flow.Flow
 
-interface PhotoRepository {
-    suspend fun fetchAndStorePhotos()
+interface AlbumRepository {
+    suspend fun fetchAndStoreAlbums()
     fun getPagedPhotos(): Flow<PagingData<Photo>>
 }

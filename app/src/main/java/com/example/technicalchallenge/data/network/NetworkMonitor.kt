@@ -1,4 +1,4 @@
-package com.example.technicalchallenge.data.net
+package com.example.technicalchallenge.data.network
 
 interface NetworkMonitor {
     fun register()

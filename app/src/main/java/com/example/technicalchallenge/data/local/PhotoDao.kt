@@ -1,4 +1,4 @@
-package com.example.technicalchallenge.data.db
+package com.example.technicalchallenge.data.local
 
 import androidx.paging.PagingSource
 import androidx.room.Dao

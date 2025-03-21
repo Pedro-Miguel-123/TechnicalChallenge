@@ -4,38 +4,39 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.technicalchallenge.data.api.APIService
-import com.example.technicalchallenge.data.db.Photo
-import com.example.technicalchallenge.data.db.PhotoDao
-import com.example.technicalchallenge.data.net.NetworkMonitor
+import com.example.technicalchallenge.data.local.Photo
+import com.example.technicalchallenge.data.local.PhotoDao
+import com.example.technicalchallenge.data.network.NetworkMonitor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class PhotoRepositoryImpl(
+class AlbumRepositoryImpl(
     private val photoDao: PhotoDao,
     networkMonitor: NetworkMonitor,
     private val apiService: APIService,
     private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
-): PhotoRepository {
+): AlbumRepository {
 
     init {
         networkMonitor.register()
         networkMonitor.setOnNetworkAvailable {
             coroutineScope.launch {
-                fetchAndStorePhotos()
+                fetchAndStoreAlbums()
             }
         }
     }
 
-    override suspend fun fetchAndStorePhotos() {
+    override suspend fun fetchAndStoreAlbums() {
         try {
+            Timber.d("Reached fetchAndStorePhotos")
             val response = apiService.fetchPhotos()
             photoDao.insertPhotos(response)
-            Timber.d("Repository", "Photos successfully fetched and stored")
+            Timber.d("Repository -> Photos successfully fetched and stored")
         } catch (e: Exception) {
-            Timber.e("Repository", "${e.message}")
+            Timber.e("Repository -> ${e.message}")
         }
     }
 
