@@ -4,7 +4,7 @@ import androidx.paging.testing.asPagingSourceFactory
 import androidx.paging.testing.asSnapshot
 import com.example.technicalchallenge.data.local.Photo
 import com.example.technicalchallenge.data.AlbumRepositoryImpl
-import com.example.technicalchallenge.data.api.APIService
+import com.example.technicalchallenge.data.api.LebonCoinAPIService
 import com.example.technicalchallenge.data.local.PhotoDao
 import com.example.technicalchallenge.data.network.NetworkMonitor
 import junit.framework.TestCase.assertEquals
@@ -28,7 +28,7 @@ import org.mockito.kotlin.whenever
 class AlbumRepositoryTest {
     private lateinit var photoDao: PhotoDao
     private lateinit var networkMonitor: NetworkMonitor
-    private lateinit var apiService: APIService
+    private lateinit var lebonCoinApiService: LebonCoinAPIService
     private lateinit var repository: AlbumRepositoryImpl
 
     private val testDispatcher = StandardTestDispatcher()
@@ -40,12 +40,12 @@ class AlbumRepositoryTest {
         Dispatchers.setMain(testDispatcher)
         photoDao = mock()
         networkMonitor = mock()
-        apiService = mock()
+        lebonCoinApiService = mock()
 
         repository = AlbumRepositoryImpl(
             photoDao = photoDao,
             networkMonitor = networkMonitor,
-            apiService = apiService,
+            lebonCoinApiService = lebonCoinApiService,
             coroutineScope = testScope
         )
     }
@@ -72,7 +72,7 @@ class AlbumRepositoryTest {
         )
 
 
-        whenever(apiService.fetchPhotos()).thenAnswer { mockPhotos }
+        whenever(lebonCoinApiService.fetchPhotos()).thenAnswer { mockPhotos }
 
 
         repository.fetchAndStoreAlbums()

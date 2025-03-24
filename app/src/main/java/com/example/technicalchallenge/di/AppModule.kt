@@ -3,7 +3,7 @@ package com.example.technicalchallenge.di
 import android.content.Context
 import com.example.technicalchallenge.data.AlbumRepository
 import com.example.technicalchallenge.data.AlbumRepositoryImpl
-import com.example.technicalchallenge.data.api.APIService
+import com.example.technicalchallenge.data.api.LebonCoinAPIService
 import com.example.technicalchallenge.data.local.PhotoDao
 import com.example.technicalchallenge.data.network.NetworkMonitor
 import com.example.technicalchallenge.data.network.NetworkMonitorImpl
@@ -31,12 +31,12 @@ object AppModule {
     }
 
     @Provides
-    fun provideApiService(): APIService {
+    fun provideApiService(): LebonCoinAPIService {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(APIService::class.java)
+            .create(LebonCoinAPIService::class.java)
     }
 
     @Provides
@@ -46,9 +46,9 @@ object AppModule {
     fun provideRepository(
         photoDao: PhotoDao,
         networkMonitor: NetworkMonitor,
-        apiService: APIService,
+        lebonCoinApiService: LebonCoinAPIService,
         coroutineScope: CoroutineScope
     ): AlbumRepository {
-        return AlbumRepositoryImpl(photoDao, networkMonitor, apiService, coroutineScope)
+        return AlbumRepositoryImpl(photoDao, networkMonitor, lebonCoinApiService, coroutineScope)
     }
 }

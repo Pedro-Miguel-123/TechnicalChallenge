@@ -3,7 +3,7 @@ package com.example.technicalchallenge.data
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.example.technicalchallenge.data.api.APIService
+import com.example.technicalchallenge.data.api.LebonCoinAPIService
 import com.example.technicalchallenge.data.local.Photo
 import com.example.technicalchallenge.data.local.PhotoDao
 import com.example.technicalchallenge.data.network.NetworkMonitor
@@ -16,7 +16,7 @@ import timber.log.Timber
 class AlbumRepositoryImpl(
     private val photoDao: PhotoDao,
     networkMonitor: NetworkMonitor,
-    private val apiService: APIService,
+    private val lebonCoinApiService: LebonCoinAPIService,
     private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
 ): AlbumRepository {
 
@@ -31,7 +31,7 @@ class AlbumRepositoryImpl(
 
     override suspend fun fetchAndStoreAlbums() {
         try {
-            val response = apiService.fetchPhotos()
+            val response = lebonCoinApiService.fetchPhotos()
             photoDao.insertPhotos(response)
         } catch (e: Exception) {
             Timber.e("Repository -> ${e.message}")
