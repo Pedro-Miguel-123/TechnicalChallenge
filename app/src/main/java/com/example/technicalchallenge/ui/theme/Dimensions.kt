@@ -9,21 +9,21 @@ class Dimensions (
     val space05x: Dp = 4.dp,
     val space1x: Dp = 8.dp,
     val space2x: Dp = 16.dp,
-    val space15x: Dp = 120.dp,
-    val space18x: Dp = 144.dp,
-    val space40x: Dp = 320.dp
+    val imageSize: Dp = 120.dp,
+    val thumbnailImageSize: Dp = 144.dp,
+    val cardHeight: Dp = 320.dp
 )
 
 private val smallestDimensions = Dimensions(
-    space18x = 128.dp,
-    space40x = 240.dp,
-    space15x = 80.dp
+    thumbnailImageSize = 128.dp,
+    cardHeight = 240.dp,
+    imageSize = 80.dp
 )
 
 private val smallDimensions = Dimensions(
-    space18x = 128.dp,
-    space40x = 280.dp,
-    space15x = 100.dp
+    thumbnailImageSize = 128.dp,
+    cardHeight = 280.dp,
+    imageSize = 100.dp
 )
 
 private val normalDimensions = Dimensions()

@@ -36,10 +36,7 @@ fun PhotoList(
         contentPadding = PaddingValues(dimensions.space2x)
     ) {
         items(photos.itemCount) { index ->
-            val photo = photos[index]
-            if (photo != null) {
-                PhotoItem(photo = photo)
-            }
+            photos[index]?.let{ PhotoItem(photo = it) }
         }
     }
 }
@@ -67,7 +64,7 @@ fun PhotoItem(photo: Photo) {
                 contentDescription = stringResource(R.string.image_description, photo.thumbnailUrl),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .size(dimensions.space18x),
+                    .size(dimensions.thumbnailImageSize),
                 contentScale = ContentScale.Crop
             )
         }

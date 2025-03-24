@@ -34,7 +34,7 @@ fun CustomDialog(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(dimensions.space40x)
+                .height(dimensions.cardHeight)
                 .padding(dimensions.space2x),
             shape = RoundedCornerShape(dimensions.space2x),
         ) {
@@ -51,7 +51,7 @@ fun CustomDialog(
                         .build(),
                     contentDescription = stringResource(R.string.image_description, photo.url),
                     modifier = Modifier
-                        .size(dimensions.space15x)
+                        .size(dimensions.imageSize)
                         .padding(dimensions.space05x),
                     contentScale = ContentScale.Crop
                 )
