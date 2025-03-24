@@ -31,10 +31,8 @@ class AlbumRepositoryImpl(
 
     override suspend fun fetchAndStoreAlbums() {
         try {
-            Timber.d("Reached fetchAndStorePhotos")
             val response = apiService.fetchPhotos()
             photoDao.insertPhotos(response)
-            Timber.d("Repository -> Photos successfully fetched and stored")
         } catch (e: Exception) {
             Timber.e("Repository -> ${e.message}")
         }

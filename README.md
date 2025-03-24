@@ -1,6 +1,7 @@
 ### Summary
 
-This project was developed in the context of a technical challenge. The purpose is to load data from this *[link](https://static.leboncoin.fr/img/shared/technical-test.json)*. The structure of the objects returned in the list is as follows:
+This project was developed in the context of a technical challenge. The goal was
+to load data from the following *[link](https://static.leboncoin.fr/img/shared/technical-test.json)*. The API returns a list of objects with the following structure:
  ```
  {
     "albumId": 1,
@@ -10,27 +11,31 @@ This project was developed in the context of a technical challenge. The purpose 
     "thumbnailUrl": "https://placehold.co/150x150/92c952/white/png"
   }
 ```
-For the purpose of this challenge we should present at least the title (```title```) and the image (which we can get from ```url```).  
+The app is required to:
 
-Furthermore, the app should work offline which implies that we should save the data objects into our app's database so we can fetch the data from there and not from the API which needs internet connection. 
+- Display the title (`title`) and image (`url`) for each object.
+- Work offline by persisting the fetched data into a local database, enabling retrieval without network connectivity.
 
+### **Architecture and Structure**
 
-### Structure
+The project follows the **Model-View-ViewModel (MVVM)** architecture, a popular and well-suited pattern for Android development. This ensures clear separation of concerns, testability, and maintainability.
 
-For this project I applied the architecture I'm most comfortable and familiarized with which is MVVM. This also relates to best practices in mobile development and provides a comprehensive structure for the project. In this app a scrollable list is presented, this list contains cards with the title associated to the object and the preview image. Whenever we press one of the cards in the list a dialog is presented with the title and the image from the url provided in the object. The following sections present in more detail the implementation for the several components of this project. 
-#### Views:
- - AlbumsApp
-	 - MainActivity
-		 - MainScreen
-			 - MyScrollableList
-				 - ListPhotoComponent
-					 - CustomDialog
+#### **Application Flow**
 
-The ```AlbumsApp```is necessary to define our ```HiltAndroidApp```which we use to perform dependency injection into some of our components which we will dive into more detail further ahead.
-A ```MainActivity``` is necessary to initialize the views we want to show. In the ```AlbumsScreen``` we implement a ```Scaffold```  when we are done getting the objects from the API and saving them into the database, while we try to perform this action, a ```CircularPogressIndicator```is presented. The ```Scaffold``` contains a ```TopAppBar``` which jut presents a title and the body. The body of the ```AlbumsScreen```contains a component called ```PhotoList```which renders the items fetched from the API provided. We use ```LazyColumn```to provide scrollable capabilities and  for each item of the list we present a new component named ```PhotoItem```which presents the data of the object in a card. A dialog was also implemented  to show the image we have in the ```url``` parameter of the object, since we show the ```thumbnailURl```in the ```PhotoItem```.
+The app displays a scrollable list of photos. Each list item shows the title and thumbnail image. When a user taps on a photo, a dialog appears with the full-sized image and its title. Below is the breakdown of key components:
 
- ```AsyncImage``` is used to present the images from the urls provided since it's an async process and we wouldn't want to lock the UI while waiting for all the images to load. Therefore we use this component and whenever they finish loading they are presented.
+1. **`AlbumsApp`**: Defines `HiltAndroidApp` for dependency injection.
+2. **`MainActivity`**: Serves as the entry point for initializing the views.
+3. **`AlbumsScreen`**: Implements a `Scaffold` with a loading spinner (`CircularProgressIndicator`) while fetching data. Once complete, it displays the list of photos.
+4. **Components**:
+    - `PhotoList`: Displays the list of photos using a `LazyColumn`.
+    - `PhotoItem`: Represents individual list items with the title and thumbnail image.
+    - `CustomDialog`: Displays the full-size image and title upon interaction.
 
+#### **Performance Considerations**:
+
+- Used `LazyColumn` for efficient rendering of large lists.
+- Implemented pagination via `PagingSource` to load items in small chunks.
 
 #### ViewModel
 For this challenge a single viewModel is sufficient and it was implemented under the name ```AlbumsViewModel```. In our viewModel we communicate with the repository to fetch and save the data from the API to the database and get the data stored in the database to be presented in the view.
@@ -88,6 +93,7 @@ Retrofit automatically parses JSON responses into Kotlin objects, reducing manua
 #### Mockito (Unit Tests)
 
 Mockito allows creating mock objects for dependencies which is essential for testing classes in isolation. By mocking dependencies you can focus on testing the behavior of the class under test. By mocking external dependencies like APIs or databases, tests can be run independently of the network or local database, ensuring consistency and speed.
+
 
 
 
