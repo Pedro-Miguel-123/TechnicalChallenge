@@ -9,4 +9,5 @@ interface AlbumRepository {
     val isFetchInProgress: AtomicBoolean
     suspend fun fetchAndStoreAlbums()
     fun getPagedPhotos(): Flow<PagingData<Photo>>
+    suspend fun getPhotoByPhotoId(photoId: Int): Photo
 }

@@ -8,8 +8,10 @@ import com.example.technicalchallenge.data.local.Photo
 import com.example.technicalchallenge.data.local.PhotoDao
 import com.example.technicalchallenge.util.network.NetworkMonitor
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.concurrent.atomic.AtomicBoolean
 
 class AlbumRepositoryImpl(
@@ -50,4 +52,10 @@ class AlbumRepositoryImpl(
             pagingSourceFactory = { photoDao.getPagedPhotos() }
         ).flow
     }
+
+    override suspend fun getPhotoByPhotoId(photoId: Int): Photo =
+        withContext(Dispatchers.IO) {
+            photoDao.getPhotoById(photoId)
+        }
+
 }

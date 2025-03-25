@@ -3,4 +3,6 @@
     <string name="top_bar_title">List of photo albums</string>
     <string name="image_description">Thumbnail from %s</string>
     <string name="dismiss_button">Dismiss</string>
+    <string name="belongs_to_album_with_id">Belongs to album with id %1$s</string>
+    <string name="go_back">Go back</string>
 </resources>

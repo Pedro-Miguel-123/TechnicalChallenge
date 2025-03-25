@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.technicalchallenge.R
 import com.example.technicalchallenge.ui.components.PhotoList
@@ -27,7 +28,7 @@ import com.example.technicalchallenge.ui.components.Warning
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AlbumsScreen(albumsViewModel: AlbumsViewModel = hiltViewModel()) {
+fun AlbumsScreen(albumsViewModel: AlbumsViewModel = hiltViewModel(), navController: NavController) {
     val viewState = albumsViewModel.uiState
     val loading = viewState.loading
     val showSnackBar = viewState.showSnackBar
@@ -75,7 +76,7 @@ fun AlbumsScreen(albumsViewModel: AlbumsViewModel = hiltViewModel()) {
             if(photos.itemCount == 0) {
                 Warning()
             } else {
-                PhotoList(modifier = Modifier.padding(padding), photos)
+                PhotoList(modifier = Modifier.padding(padding), photos, navController)
             }
         }
     }

@@ -9,4 +9,14 @@ data class Photo(
     val title: String,
     val url: String,
     val thumbnailUrl: String
-)
+) {
+    companion object {
+        fun empty() = Photo(
+                albumId = 0,
+                id = 0,
+                title= "",
+                url = "",
+                thumbnailUrl = ""
+        )
+    }
+}

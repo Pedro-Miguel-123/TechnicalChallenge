@@ -4,8 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.technicalchallenge.ui.theme.TechnicalChallengeTheme
-import com.example.technicalchallenge.ui.album.AlbumsScreen
+import com.example.technicalchallenge.ui.nav.NavigationComponent
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -16,9 +15,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            TechnicalChallengeTheme {
-                AlbumsScreen()
-            }
+            NavigationComponent()
         }
     }
 }

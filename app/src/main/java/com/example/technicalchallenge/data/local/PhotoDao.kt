@@ -16,4 +16,7 @@ interface PhotoDao {
 
     @Query("SELECT * FROM photos WHERE albumId = :albumId ORDER BY id ASC")
     fun getPagedAlbumPhotos(albumId: Int): PagingSource<Int, Photo>
+
+    @Query("SELECT * FROM photos WHERE id = :photoId")
+    fun getPhotoById(photoId: Int): Photo
 }
