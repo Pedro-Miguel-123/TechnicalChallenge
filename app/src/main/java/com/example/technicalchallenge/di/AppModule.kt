@@ -5,8 +5,8 @@ import com.example.technicalchallenge.data.AlbumRepository
 import com.example.technicalchallenge.data.AlbumRepositoryImpl
 import com.example.technicalchallenge.data.api.LebonCoinAPIService
 import com.example.technicalchallenge.data.local.PhotoDao
-import com.example.technicalchallenge.data.network.NetworkMonitor
-import com.example.technicalchallenge.data.network.NetworkMonitorImpl
+import com.example.technicalchallenge.util.network.NetworkMonitor
+import com.example.technicalchallenge.util.network.NetworkMonitorImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

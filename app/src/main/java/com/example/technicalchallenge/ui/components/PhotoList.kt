@@ -59,6 +59,8 @@ fun PhotoItem(photo: Photo) {
                 model = ImageRequest.Builder
                     (LocalContext.current)
                     .data(photo.thumbnailUrl)
+                    .placeholder(R.drawable.baseline_broken_image_24)
+                    .error(R.drawable.baseline_broken_image_24)
                     .crossfade(true)
                     .build(),
                 contentDescription = stringResource(R.string.image_description, photo.thumbnailUrl),

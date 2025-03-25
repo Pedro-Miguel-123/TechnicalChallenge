@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import com.example.technicalchallenge.data.api.LebonCoinAPIService
 import com.example.technicalchallenge.data.local.Photo
 import com.example.technicalchallenge.data.local.PhotoDao
-import com.example.technicalchallenge.data.network.NetworkMonitor
+import com.example.technicalchallenge.util.network.NetworkMonitor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
