@@ -34,6 +34,16 @@ class AlbumRepositoryTest {
     private val testDispatcher = StandardTestDispatcher()
     private val testScope = TestScope(testDispatcher)
 
+    private val mockPhotos = listOf(
+        Photo(
+            albumId = 1,
+            id = 1,
+            title = "Test Photo",
+            url = "https://placehold.co/600x600.png",
+            thumbnailUrl = "https://placehold.co/150x150.png"
+        )
+    )
+
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setup() {
@@ -57,20 +67,12 @@ class AlbumRepositoryTest {
     }
 
     @Test
-    fun `fetchAndStorePhotos should fetch data and store in DB`() = runTest {
-
+    fun `verify init method call`() = runTest {
         verify(networkMonitor).register()
+    }
 
-        val mockPhotos = listOf(
-            Photo(
-            albumId = 1,
-            id = 1,
-            title = "accusamus beatae ad facilis cum similique qui sunt",
-            url = "https://placehold.co/600x600/92c952/white/png",
-            thumbnailUrl = "https://placehold.co/150x150/92c952/white/png"
-        )
-        )
-
+    @Test
+    fun `fetchAndStoreAlbums should fetch data and store in DB`() = runTest {
 
         whenever(lebonCoinApiService.fetchPhotos()).thenAnswer { mockPhotos }
 
@@ -83,17 +85,8 @@ class AlbumRepositoryTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `getPagedData should return data properly formatted`() = runTest {
-        val mockPhoto = listOf(
-            Photo(
-            albumId = 1,
-            id = 1,
-            title = "Test Photo",
-            url = "https://placehold.co/600x600.png",
-            thumbnailUrl = "https://placehold.co/150x150.png"
-        )
-        )
 
-        val pagingSourceFactory = mockPhoto.asPagingSourceFactory()
+        val pagingSourceFactory = mockPhotos.asPagingSourceFactory()
         val pagingSource = pagingSourceFactory()
 
 
@@ -101,13 +94,12 @@ class AlbumRepositoryTest {
 
 
         val flow = repository.getPagedPhotos()
-        println("FLOW -> ${flow.first()}")
         val differ = flow.asSnapshot()
 
         advanceUntilIdle()
 
 
         assertEquals(1, differ.size)
-        assertEquals(mockPhoto, differ)
+        assertEquals(mockPhotos, differ)
     }
 }

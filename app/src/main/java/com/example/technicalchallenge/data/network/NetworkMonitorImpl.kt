@@ -25,7 +25,9 @@ class NetworkMonitorImpl(context: Context, private var onConnected: () -> Unit) 
         connectivityManager.registerNetworkCallback(request, networkCallback)
     }
 
-    override fun setOnNetworkAvailable(callback: () -> Unit) {
-        this.onConnected = callback
+    override fun setOnNetworkAvailable(callback: (() -> Unit)?) {
+        callback?.let {
+            this.onConnected = it
+        }
     }
 }

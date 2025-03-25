@@ -8,33 +8,36 @@ import com.example.technicalchallenge.data.local.Photo
 import com.example.technicalchallenge.data.local.PhotoDao
 import com.example.technicalchallenge.data.network.NetworkMonitor
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import timber.log.Timber
+import java.util.concurrent.atomic.AtomicBoolean
 
 class AlbumRepositoryImpl(
     private val photoDao: PhotoDao,
     networkMonitor: NetworkMonitor,
     private val lebonCoinApiService: LebonCoinAPIService,
-    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+    private val coroutineScope: CoroutineScope
 ): AlbumRepository {
+
+    override val isFetchInProgress = AtomicBoolean(false)
 
     init {
         networkMonitor.register()
         networkMonitor.setOnNetworkAvailable {
             coroutineScope.launch {
-                fetchAndStoreAlbums()
+                if(isFetchInProgress.compareAndSet(false, true)) {
+                    fetchAndStoreAlbums().also {
+                        isFetchInProgress.set(false)
+                    }
+                }
+
             }
         }
     }
 
     override suspend fun fetchAndStoreAlbums() {
-        try {
-            val response = lebonCoinApiService.fetchPhotos()
-            photoDao.insertPhotos(response)
-        } catch (e: Exception) {
-            Timber.e("Repository -> ${e.message}")
+        lebonCoinApiService.fetchPhotos().also {
+            photoDao.insertPhotos(it)
         }
     }
 
