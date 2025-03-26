@@ -25,46 +25,38 @@ import com.example.technicalchallenge.ui.theme.dimensions
 
 @Composable
 fun PhotoList(
-    modifier: Modifier = Modifier,
-    photos: LazyPagingItems<Photo>,
-    navController: NavController
+    modifier: Modifier, photos: LazyPagingItems<Photo>, navController: NavController
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(dimensions.space2x)
+        modifier = modifier.fillMaxSize(), contentPadding = PaddingValues(dimensions.space2x)
     ) {
         items(photos.itemCount) { index ->
-            photos[index]?.let{ PhotoItem(photo = it) {
-                navController.navigate("photo_detail/${it.id}")
-            } }
+            photos[index]?.let { photo ->
+                PhotoItem(photo = photo) {
+                    navController.navigate("photo_detail/${photo.id}")
+                }
+            }
         }
     }
 }
 
 
 @Composable
-fun PhotoItem(photo: Photo,
-              navigate: () -> Unit) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = dimensions.space1x)
-            .clickable {
-               navigate()
-            }
-    ) {
+fun PhotoItem(photo: Photo, onClick: () -> Unit) {
+    Card(modifier = Modifier
+        .fillMaxWidth()
+        .padding(bottom = dimensions.space1x)
+        .clickable {
+            onClick()
+        }) {
         Row(
             modifier = Modifier.padding(dimensions.space2x),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                model = ImageRequest.Builder
-                    (LocalContext.current)
-                    .data(photo.thumbnailUrl)
+                model = ImageRequest.Builder(LocalContext.current).data(photo.thumbnailUrl)
                     .placeholder(R.drawable.baseline_broken_image_24)
-                    .error(R.drawable.baseline_broken_image_24)
-                    .crossfade(true)
-                    .build(),
+                    .error(R.drawable.baseline_broken_image_24).crossfade(true).build(),
                 contentDescription = stringResource(R.string.image_description, photo.thumbnailUrl),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.padding(dimensions.space1x)

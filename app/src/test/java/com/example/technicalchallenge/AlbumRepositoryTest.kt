@@ -67,7 +67,7 @@ class AlbumRepositoryTest {
     }
 
     @Test
-    fun `verify init method call`() = runTest {
+    fun `init should register a connection callback on network monitor`() = runTest {
         verify(networkMonitor).register()
     }
 

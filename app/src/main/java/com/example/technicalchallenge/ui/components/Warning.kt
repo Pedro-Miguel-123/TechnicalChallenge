@@ -19,17 +19,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.technicalchallenge.R
 import com.example.technicalchallenge.ui.theme.dimensions
 
 @Composable
-fun Warning(
-    title: String = "Warning",
-    message: String = "There are no photos stored locally"
-) {
+fun Warning() {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -46,7 +44,7 @@ fun Warning(
             // Warning Icon
             Box(
                 modifier = Modifier
-                    .size(80.dp)
+                    .size(dimensions.iconBoxSize)
                     .background(Color.Red, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
@@ -54,12 +52,12 @@ fun Warning(
                     imageVector = Icons.Default.Warning,
                     contentDescription = "Warning Icon",
                     tint = Color.White,
-                    modifier = Modifier.size(48.dp)
+                    modifier = Modifier.size(dimensions.iconSize)
                 )
             }
 
             Text(
-                text = title,
+                text = stringResource(R.string.warning_title),
                 style = MaterialTheme.typography.headlineMedium.copy(
                     fontWeight = FontWeight.Bold
                 ),
@@ -67,13 +65,13 @@ fun Warning(
             )
 
             Text(
-                text = message,
+                text = stringResource(R.string.warning_message),
                 style = MaterialTheme.typography.bodyMedium.copy(
                     fontSize = 16.sp
                 ),
                 color = Color.Gray,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(horizontal = 24.dp)
+                modifier = Modifier.padding(horizontal = dimensions.space3x)
             )
         }
     }

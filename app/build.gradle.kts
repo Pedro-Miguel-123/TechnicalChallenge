@@ -93,8 +93,6 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
 
-    // Timber
-    implementation(libs.jakewharton.timber)
 
     // Debugging
     debugImplementation(libs.androidx.ui.tooling)

@@ -13,13 +13,13 @@ import javax.inject.Inject
 
 
 data class PhotoViewState(
-    val photo: Photo = Photo.empty()
+    val photo: Photo? = null
 )
 
 @HiltViewModel
-class PhotoViewModel @Inject constructor(
+class PhotoDetailViewModel @Inject constructor(
     private val repository: AlbumRepository
-): ViewModel() {
+) : ViewModel() {
     var uiState by mutableStateOf(PhotoViewState())
         private set
 

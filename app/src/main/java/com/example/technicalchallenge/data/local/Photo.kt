@@ -1,4 +1,5 @@
 package com.example.technicalchallenge.data.local
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -9,14 +10,4 @@ data class Photo(
     val title: String,
     val url: String,
     val thumbnailUrl: String
-) {
-    companion object {
-        fun empty() = Photo(
-                albumId = 0,
-                id = 0,
-                title= "",
-                url = "",
-                thumbnailUrl = ""
-        )
-    }
-}
+)

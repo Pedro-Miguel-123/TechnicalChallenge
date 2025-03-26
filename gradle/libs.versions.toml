@@ -19,7 +19,6 @@ kotlinxCoroutinesTest = "1.7.3"
 mockitoInline = "4.6.1"
 archCoreTesting = "2.2.0"
 pagingTesting = "3.3.6"
-timber = "5.0.1"
 recyclerview = "1.4.0"
 pagingRuntimeKtx = "3.3.6"
 hilt = "2.51.1"
@@ -68,8 +67,7 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-paging = { group = "androidx.room", name = "room-paging", version.ref = "roomPaging"}
 
-# Timber
-jakewharton-timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber"}
+# Paging
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 androidx-paging-runtime-ktx = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }

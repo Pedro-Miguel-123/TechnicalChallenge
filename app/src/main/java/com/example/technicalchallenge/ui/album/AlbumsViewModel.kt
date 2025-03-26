@@ -11,7 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class AlbumViewState (
+data class AlbumViewState(
     val loading: Boolean = true,
     val showSnackBar: Boolean = false
 )
@@ -19,7 +19,7 @@ data class AlbumViewState (
 @HiltViewModel
 class AlbumsViewModel @Inject constructor(
     private val repository: AlbumRepository
-): ViewModel() {
+) : ViewModel() {
 
     var uiState by mutableStateOf(AlbumViewState())
         private set
@@ -32,7 +32,8 @@ class AlbumsViewModel @Inject constructor(
                 repository.fetchAndStoreAlbums()
             }.onSuccess {
                 uiState = uiState.copy(
-                    loading = false
+                    loading = false,
+                    showSnackBar = false
                 )
             }.onFailure {
                 uiState = uiState.copy(
@@ -40,7 +41,7 @@ class AlbumsViewModel @Inject constructor(
                     showSnackBar = true
                 )
             }.also {
-                repository.isFetchInProgress.set(false)
+                repository.setFetchInProgress(false)
             }
         }
     }

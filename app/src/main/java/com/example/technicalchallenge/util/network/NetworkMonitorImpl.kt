@@ -6,7 +6,9 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 
-class NetworkMonitorImpl(context: Context, private var onConnected: () -> Unit) : NetworkMonitor {
+class NetworkMonitorImpl(context: Context) : NetworkMonitor {
+
+    private var onConnected: (() -> Unit)? = null
 
     private val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -14,7 +16,7 @@ class NetworkMonitorImpl(context: Context, private var onConnected: () -> Unit) 
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
             super.onAvailable(network)
-            onConnected()
+            onConnected?.let { it() }
         }
     }
 
@@ -25,9 +27,7 @@ class NetworkMonitorImpl(context: Context, private var onConnected: () -> Unit) 
         connectivityManager.registerNetworkCallback(request, networkCallback)
     }
 
-    override fun setOnNetworkAvailable(callback: (() -> Unit)?) {
-        callback?.let {
-            this.onConnected = it
-        }
+    override fun setOnNetworkAvailable(callback: () -> Unit) {
+        onConnected = callback
     }
 }

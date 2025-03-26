@@ -19,7 +19,7 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): PhotoDatabase {
-        return  Room.databaseBuilder(
+        return Room.databaseBuilder(
             context,
             PhotoDatabase::class.java,
             databaseName

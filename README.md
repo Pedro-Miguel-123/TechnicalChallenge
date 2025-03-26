@@ -22,12 +22,13 @@ The project follows the **Model-View-ViewModel (MVVM)** architecture, a popular 
 
 #### **Application Flow**
 
-The app displays a scrollable list of photos. Each list item shows the title and thumbnail image. When a user taps on a photo, a dialog appears with the full-sized image and its title. Below is the breakdown of key components:
+The app displays a scrollable list of photos. Each list item shows the title and thumbnail image. When a user taps on a photo, they navigate to another screen with more details about the photo they selected. Below is the breakdown of key components:
 
-1. **`AlbumsApp`**: Defines `HiltAndroidApp` for dependency injection.
+1. **`AlbumsApplication`**: Defines `HiltAndroidApp` for dependency injection.
 2. **`MainActivity`**: Serves as the entry point for initializing the views.
-3. **`AlbumsScreen`**: Implements a `Scaffold` with a loading spinner (`CircularProgressIndicator`) while fetching data. Once complete, it displays the list of photos.
-4. **Components**:
+3. **AlbumsApp**: 
+4. **`AlbumsScreen`**: Implements a `Scaffold` with a loading spinner (`CircularProgressIndicator`) while fetching data. Once complete, it displays the list of photos.
+5. **Components**:
     - `PhotoList`: Displays the list of photos using a `LazyColumn`.
     - `PhotoItem`: Represents individual list items with the title and thumbnail image.
     - `CustomDialog`: Displays the full-size image and title upon interaction.

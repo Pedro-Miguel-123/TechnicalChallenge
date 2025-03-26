@@ -5,4 +5,8 @@
     <string name="dismiss_button">Dismiss</string>
     <string name="belongs_to_album_with_id">Belongs to album with id %1$s</string>
     <string name="go_back">Go back</string>
+    <string name="snackbar_message">Failed getting remote data, check internet connection</string>
+    <string name="warning_title">Warning</string>
+    <string name="warning_message">There are no photos stored locally</string>
+    <string name="photo_details_of_photo_with_id">Photo details of photo with id %1$s</string>
 </resources>

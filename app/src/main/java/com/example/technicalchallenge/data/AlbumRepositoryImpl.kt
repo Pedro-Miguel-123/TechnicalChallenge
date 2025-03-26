@@ -15,19 +15,19 @@ import kotlinx.coroutines.withContext
 import java.util.concurrent.atomic.AtomicBoolean
 
 class AlbumRepositoryImpl(
-    private val photoDao: PhotoDao,
     networkMonitor: NetworkMonitor,
+    private val photoDao: PhotoDao,
     private val lebonCoinApiService: LebonCoinAPIService,
     private val coroutineScope: CoroutineScope
-): AlbumRepository {
+) : AlbumRepository {
 
-    override val isFetchInProgress = AtomicBoolean(false)
+    private val isFetchInProgress = AtomicBoolean(false)
 
     init {
         networkMonitor.register()
         networkMonitor.setOnNetworkAvailable {
             coroutineScope.launch {
-                if(isFetchInProgress.compareAndSet(false, true)) {
+                if (isFetchInProgress.compareAndSet(false, true)) {
                     fetchAndStoreAlbums().also {
                         isFetchInProgress.set(false)
                     }
@@ -37,9 +37,15 @@ class AlbumRepositoryImpl(
         }
     }
 
+    override fun setFetchInProgress(value: Boolean) {
+        isFetchInProgress.set(value)
+    }
+
     override suspend fun fetchAndStoreAlbums() {
-        lebonCoinApiService.fetchPhotos().also {
-            photoDao.insertPhotos(it)
+        withContext(Dispatchers.IO) {
+            lebonCoinApiService.fetchPhotos().also {
+                photoDao.insertPhotos(it)
+            }
         }
     }
 

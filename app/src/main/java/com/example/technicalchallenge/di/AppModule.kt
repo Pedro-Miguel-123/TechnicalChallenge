@@ -21,14 +21,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    const val BASE_URL= "https://static.leboncoin.fr/img/shared/"
+    const val BASE_URL = "https://static.leboncoin.fr/img/shared/"
 
     @Provides
     fun provideNetworkMonitor(
         @ApplicationContext context: Context
     ): NetworkMonitor {
-        return NetworkMonitorImpl(context) {
-        }
+        return NetworkMonitorImpl(context)
     }
 
     @Provides
@@ -50,6 +49,6 @@ object AppModule {
         lebonCoinApiService: LebonCoinAPIService,
         coroutineScope: CoroutineScope
     ): AlbumRepository {
-        return AlbumRepositoryImpl(photoDao, networkMonitor, lebonCoinApiService, coroutineScope)
+        return AlbumRepositoryImpl(networkMonitor, photoDao, lebonCoinApiService, coroutineScope)
     }
 }

@@ -15,11 +15,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.technicalchallenge.R
@@ -28,20 +29,22 @@ import com.example.technicalchallenge.ui.components.Warning
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AlbumsScreen(albumsViewModel: AlbumsViewModel = hiltViewModel(), navController: NavController) {
+fun AlbumsScreen(albumsViewModel: AlbumsViewModel, navController: NavController) {
     val viewState = albumsViewModel.uiState
     val loading = viewState.loading
     val showSnackBar = viewState.showSnackBar
     val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(albumsViewModel) {
         albumsViewModel.fetchAndSaveAlbums()
     }
 
-    if (showSnackBar) {
-        LaunchedEffect(albumsViewModel) {
+    LaunchedEffect(showSnackBar) {
+        if (showSnackBar) {
             snackbarHostState.showSnackbar(
-                message = "Failed getting remote data, check internet connection",
+                message = context.getString(R.string.snackbar_message),
                 duration = SnackbarDuration.Short
             )
         }
@@ -49,12 +52,12 @@ fun AlbumsScreen(albumsViewModel: AlbumsViewModel = hiltViewModel(), navControll
 
     val photos = albumsViewModel.pagedData.collectAsLazyPagingItems()
     if (loading) {
-        Column (
+        Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CircularProgressIndicator (
+            CircularProgressIndicator(
                 color = Color.Red
             )
         }
@@ -66,14 +69,14 @@ fun AlbumsScreen(albumsViewModel: AlbumsViewModel = hiltViewModel(), navControll
             topBar = {
                 TopAppBar(
                     title = {
-                        Text (
+                        Text(
                             text = stringResource(R.string.top_bar_title)
                         )
                     }
                 )
             }
         ) { padding ->
-            if(photos.itemCount == 0) {
+            if (photos.itemCount == 0) {
                 Warning()
             } else {
                 PhotoList(modifier = Modifier.padding(padding), photos, navController)
