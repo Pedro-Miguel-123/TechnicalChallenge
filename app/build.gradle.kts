@@ -1,5 +1,5 @@
 plugins {
-    id("org.jetbrains.kotlin.kapt")
+    alias(libs.plugins.ksp)
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
@@ -19,14 +19,14 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
     }
 
     buildTypes {
-        debug {
-            buildConfigField("boolean", "DEBUG_MODE", "true")
-        }
         release {
-            buildConfigField("boolean", "DEBUG_MODE", "false")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -48,6 +48,7 @@ android {
 }
 
 dependencies {
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -58,11 +59,10 @@ dependencies {
     implementation(libs.androidx.material3)
 
     // Hilt
-    implementation(libs.squareup.javapoet)
     implementation(libs.dagger.hilt)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
-    kapt(libs.dagger.hilt.compiler)
+    ksp(libs.dagger.hilt.compiler)
 
     // Networking - Retrofit & Gson
     implementation(libs.retrofit)
@@ -79,7 +79,7 @@ dependencies {
     implementation(libs.room.paging)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.paging.runtime.ktx)
-    kapt(libs.room.compiler)
+    ksp(libs.room.compiler)
 
     // Testing
     testImplementation(libs.junit)
@@ -93,8 +93,6 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
 
-    // Timber
-    implementation(libs.jakewharton.timber)
 
     // Debugging
     debugImplementation(libs.androidx.ui.tooling)

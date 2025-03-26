@@ -1,4 +1,5 @@
 package com.example.technicalchallenge.data.local
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 

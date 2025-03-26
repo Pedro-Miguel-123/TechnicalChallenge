@@ -3,40 +3,49 @@ package com.example.technicalchallenge.data
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.example.technicalchallenge.data.api.APIService
+import com.example.technicalchallenge.data.api.LebonCoinAPIService
 import com.example.technicalchallenge.data.local.Photo
 import com.example.technicalchallenge.data.local.PhotoDao
-import com.example.technicalchallenge.data.network.NetworkMonitor
+import com.example.technicalchallenge.util.network.NetworkMonitor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import timber.log.Timber
+import kotlinx.coroutines.withContext
+import java.util.concurrent.atomic.AtomicBoolean
 
 class AlbumRepositoryImpl(
-    private val photoDao: PhotoDao,
     networkMonitor: NetworkMonitor,
-    private val apiService: APIService,
-    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
-): AlbumRepository {
+    private val photoDao: PhotoDao,
+    private val lebonCoinApiService: LebonCoinAPIService,
+    private val coroutineScope: CoroutineScope
+) : AlbumRepository {
+
+    private val isFetchInProgress = AtomicBoolean(false)
 
     init {
         networkMonitor.register()
         networkMonitor.setOnNetworkAvailable {
             coroutineScope.launch {
-                fetchAndStoreAlbums()
+                if (isFetchInProgress.compareAndSet(false, true)) {
+                    fetchAndStoreAlbums().also {
+                        isFetchInProgress.set(false)
+                    }
+                }
+
             }
         }
     }
 
+    override fun setFetchInProgress(value: Boolean) {
+        isFetchInProgress.set(value)
+    }
+
     override suspend fun fetchAndStoreAlbums() {
-        try {
-            Timber.d("Reached fetchAndStorePhotos")
-            val response = apiService.fetchPhotos()
-            photoDao.insertPhotos(response)
-            Timber.d("Repository -> Photos successfully fetched and stored")
-        } catch (e: Exception) {
-            Timber.e("Repository -> ${e.message}")
+        withContext(Dispatchers.IO) {
+            lebonCoinApiService.fetchPhotos().also {
+                photoDao.insertPhotos(it)
+            }
         }
     }
 
@@ -49,4 +58,10 @@ class AlbumRepositoryImpl(
             pagingSourceFactory = { photoDao.getPagedPhotos() }
         ).flow
     }
+
+    override suspend fun getPhotoByPhotoId(photoId: Int): Photo =
+        withContext(Dispatchers.IO) {
+            photoDao.getPhotoById(photoId)
+        }
+
 }

@@ -5,25 +5,22 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-class Dimensions (
-    val space05x: Dp = 4.dp,
+class Dimensions(
     val space1x: Dp = 8.dp,
     val space2x: Dp = 16.dp,
-    val imageSize: Dp = 144.dp,
-    val dialogHeight: Dp = 320.dp,
-    val dialogImageSize: Dp = 120.dp
+    val space3x: Dp = 24.dp,
+    val iconSize: Dp = 48.dp,
+    val iconBoxSize: Dp = 80.dp,
 )
 
 private val smallestDimensions = Dimensions(
-    imageSize = 128.dp,
-    dialogHeight = 240.dp,
-    dialogImageSize = 80.dp
+    iconSize = 32.dp,
+    iconBoxSize = 56.dp
 )
 
 private val smallDimensions = Dimensions(
-    imageSize = 128.dp,
-    dialogHeight = 280.dp,
-    dialogImageSize = 100.dp
+    iconSize = 40.dp,
+    iconBoxSize = 64.dp
 )
 
 private val normalDimensions = Dimensions()

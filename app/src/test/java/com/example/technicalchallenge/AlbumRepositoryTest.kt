@@ -4,9 +4,9 @@ import androidx.paging.testing.asPagingSourceFactory
 import androidx.paging.testing.asSnapshot
 import com.example.technicalchallenge.data.local.Photo
 import com.example.technicalchallenge.data.AlbumRepositoryImpl
-import com.example.technicalchallenge.data.api.APIService
+import com.example.technicalchallenge.data.api.LebonCoinAPIService
 import com.example.technicalchallenge.data.local.PhotoDao
-import com.example.technicalchallenge.data.network.NetworkMonitor
+import com.example.technicalchallenge.util.network.NetworkMonitor
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,11 +28,20 @@ import org.mockito.kotlin.whenever
 class AlbumRepositoryTest {
     private lateinit var photoDao: PhotoDao
     private lateinit var networkMonitor: NetworkMonitor
-    private lateinit var apiService: APIService
+    private lateinit var lebonCoinApiService: LebonCoinAPIService
     private lateinit var repository: AlbumRepositoryImpl
-
     private val testDispatcher = StandardTestDispatcher()
     private val testScope = TestScope(testDispatcher)
+
+    private val mockPhotos = listOf(
+        Photo(
+            albumId = 1,
+            id = 1,
+            title = "Test Photo",
+            url = "https://placehold.co/600x600.png",
+            thumbnailUrl = "https://placehold.co/150x150.png"
+        )
+    )
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
@@ -40,12 +49,12 @@ class AlbumRepositoryTest {
         Dispatchers.setMain(testDispatcher)
         photoDao = mock()
         networkMonitor = mock()
-        apiService = mock()
+        lebonCoinApiService = mock()
 
         repository = AlbumRepositoryImpl(
             photoDao = photoDao,
             networkMonitor = networkMonitor,
-            apiService = apiService,
+            lebonCoinApiService = lebonCoinApiService,
             coroutineScope = testScope
         )
     }
@@ -57,22 +66,14 @@ class AlbumRepositoryTest {
     }
 
     @Test
-    fun `fetchAndStorePhotos should fetch data and store in DB`() = runTest {
-
+    fun `init should register a connection callback on network monitor`() = runTest {
         verify(networkMonitor).register()
+    }
 
-        val mockPhotos = listOf(
-            Photo(
-            albumId = 1,
-            id = 1,
-            title = "accusamus beatae ad facilis cum similique qui sunt",
-            url = "https://placehold.co/600x600/92c952/white/png",
-            thumbnailUrl = "https://placehold.co/150x150/92c952/white/png"
-        )
-        )
+    @Test
+    fun `fetchAndStoreAlbums should fetch data and store in DB`() = runTest {
 
-
-        whenever(apiService.fetchPhotos()).thenAnswer { mockPhotos }
+        whenever(lebonCoinApiService.fetchPhotos()).thenAnswer { mockPhotos }
 
 
         repository.fetchAndStoreAlbums()
@@ -83,17 +84,8 @@ class AlbumRepositoryTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `getPagedData should return data properly formatted`() = runTest {
-        val mockPhoto = listOf(
-            Photo(
-            albumId = 1,
-            id = 1,
-            title = "Test Photo",
-            url = "https://placehold.co/600x600.png",
-            thumbnailUrl = "https://placehold.co/150x150.png"
-        )
-        )
 
-        val pagingSourceFactory = mockPhoto.asPagingSourceFactory()
+        val pagingSourceFactory = mockPhotos.asPagingSourceFactory()
         val pagingSource = pagingSourceFactory()
 
 
@@ -101,13 +93,12 @@ class AlbumRepositoryTest {
 
 
         val flow = repository.getPagedPhotos()
-        println("FLOW -> ${flow.first()}")
         val differ = flow.asSnapshot()
 
         advanceUntilIdle()
 
 
         assertEquals(1, differ.size)
-        assertEquals(mockPhoto, differ)
+        assertEquals(mockPhotos, differ)
     }
 }

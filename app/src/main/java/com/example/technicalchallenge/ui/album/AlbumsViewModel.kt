@@ -1,4 +1,4 @@
-package com.example.technicalchallenge.ui.albumScreen
+package com.example.technicalchallenge.ui.album
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -11,14 +11,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class AlbumViewState (
-    val loading: Boolean = true
+data class AlbumViewState(
+    val loading: Boolean = true,
+    val showSnackBar: Boolean = false
 )
 
 @HiltViewModel
 class AlbumsViewModel @Inject constructor(
     private val repository: AlbumRepository
-): ViewModel() {
+) : ViewModel() {
 
     var uiState by mutableStateOf(AlbumViewState())
         private set
@@ -30,14 +31,19 @@ class AlbumsViewModel @Inject constructor(
             runCatching {
                 repository.fetchAndStoreAlbums()
             }.onSuccess {
-                uiState= uiState.copy(
-                    loading = false
+                uiState = uiState.copy(
+                    loading = false,
+                    showSnackBar = false
                 )
             }.onFailure {
                 uiState = uiState.copy(
-                    loading = true
+                    loading = false,
+                    showSnackBar = true
                 )
+            }.also {
+                repository.setFetchInProgress(false)
             }
         }
     }
 }
+
