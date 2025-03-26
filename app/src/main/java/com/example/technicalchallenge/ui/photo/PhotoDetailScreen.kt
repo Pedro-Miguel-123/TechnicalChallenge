@@ -68,7 +68,11 @@ fun PhotoDetailScreen(photoId: Int, viewModel: PhotoDetailViewModel, navControll
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues)
+                    .padding(
+                        top = paddingValues.calculateTopPadding(),
+                        start = dimensions.space2x,
+                        end = dimensions.space2x
+                    )
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder
