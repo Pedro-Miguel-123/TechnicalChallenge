@@ -30,7 +30,6 @@ class AlbumRepositoryTest {
     private lateinit var networkMonitor: NetworkMonitor
     private lateinit var lebonCoinApiService: LebonCoinAPIService
     private lateinit var repository: AlbumRepositoryImpl
-
     private val testDispatcher = StandardTestDispatcher()
     private val testScope = TestScope(testDispatcher)
 
